@@ -1,13 +1,6 @@
 #pragma once
+/*! \file CommandLineManagament.h*/
 #include <string>
 #include <iostream>
-struct Files
-{
-	std::string fileWithGraph;
-	std::string fileWithStarts;
-	std::string outputFile;
-	bool areFilesCorrect;
-};
-
+/*! Funkcja wyœwietajaca pomoc uzyta aby uzytkownik po wpisaniu -h otrzymal liste argumentow programu*/
 void showHelp();
-Files getFiles(int argc, char** argv);

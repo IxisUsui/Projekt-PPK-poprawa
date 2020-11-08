@@ -6,18 +6,33 @@
 
 int main(int argc, char **argv)
 {
-	Files files;
+	std::string fileWithGraph,fileWithStarts, outputFile;
 	if (argc == 1 or (std::string(argv[1]) == "-h" and argc == 2))
 	{
 		showHelp();
 	}
 	if (argc == 7)
 	{
-		files = getFiles(argc, argv);
-		if (!files.areFilesCorrect)
+		for (int i = 1; i < argc; i++)
 		{
-			std::cout << "Bledne argumenty funckji, -h pomoc" << std::endl;
-			return 1;
+			if (std::string(argv[i]) == "-g")
+			{
+
+				fileWithGraph = argv[++i];
+			}
+			else if (std::string(argv[i]) == "-w")
+			{
+				fileWithStarts = argv[++i];
+			}
+			else if (std::string(argv[i]) == "-o")
+			{
+				outputFile = argv[++i];
+			}
+			else
+			{
+				std::cout << "Wpisano błedne argumenty";
+				return 1;
+			}
 		}
 	}
 	else 
@@ -25,26 +40,6 @@ int main(int argc, char **argv)
 		std::cout << "za mało argumentow programu";
 		return 1;
 	}
-
-	std::cout << "Dane maja wyswietlic sie w pliku(1) czy konsoli(2) - (wpisz 1 lub 2)"<<std::endl;
-	int answer;
-	std::cin >> answer;
-	bool useFile;
-	if (answer == 1){
-		useFile = true; 
-	}
-	else if(answer ==2){
-
-		useFile = false; 
-	}
-	else
-	{
-		std::cout << "podano zla dane" << std::endl;
-		return 1;
-	}
-	
-	operationOfDijkstra(files.fileWithGraph, files.fileWithStarts, useFile, files.outputFile);
-	
-	getchar(); getchar();
+	operationOfDijkstra(fileWithGraph, fileWithStarts, outputFile);
 	return 0;
 }

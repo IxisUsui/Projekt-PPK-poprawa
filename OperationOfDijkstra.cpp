@@ -1,7 +1,26 @@
 #include "OperationOfDijkstra.h"
 
-
-int findMin(std::map<int, PreviousPkt> previousOne) //zwraca id mapy
+std::map<int, std::map<int, double>> mapToMatrix(std::map<int, std::vector<NextPt>>neighbors)
+{
+	std::map<int, std::map<int, double>>matrix;
+	int n = neighbors.size();
+	for (const auto& neighbor : neighbors)
+	{
+		for (const auto& neighbor1 : neighbors)
+		{
+			matrix[neighbor.first][neighbor1.first] = 0;
+		}
+	}
+	for (auto& neighbor : neighbors)
+	{
+		for (unsigned int i = 0; i < neighbor.second.size(); i++)
+		{
+			matrix[neighbor.first][neighbor.second[i].nextPt] = neighbor.second[i].distance;
+		}
+	}
+	return matrix;
+}
+int findMin(std::map<int, PreviousPt> previousOne) //zwraca id mapy
 {
 	double minOdleglosc = INT_MAX;
 	int indeks = -1;
@@ -14,47 +33,21 @@ int findMin(std::map<int, PreviousPkt> previousOne) //zwraca id mapy
 		}
 	}
 	return indeks;
-
-}
-
-bool isExistingPkt(std::map<int, std::vector<NextPt>> neighbors, int start)
-{
-	for (const auto& neighbor : neighbors)
-	{
-		if (neighbor.first == start)
-		{
-			return true;
-		}
-	}
-	return false;
 }
 
 
-void operationOfDijkstra(std::string fileWithGraph, std::string fileWithStarts, bool useFile, std::string outputFile)
-{
-	// inicjacja zbiorow, zmiennych
 
-	std::map<int, std::vector<NextPt>> neighbors = inputGraf(fileWithGraph); // mapa z lista nastepnikow dla danego punktu
-	std::map<int, PreviousPkt> previousOne; // mapa gdzie juz beda rozwiazania po sznurku;
-	std::vector <int> startingPkt = inputStartPkt(fileWithStarts, neighbors); // lista punktow startowych
+
+void operationOfDijkstra(std::string fileWithGraph, std::string fileWithStarts,std::string outputFile) // funckja istnieje aby utworzyc zmienne ktore nastepnie sa przekazywane do funkcji, oraz aby moc dla kazdego nowego punktu startowego liczyc od nowa dijkstre oraz wypisywaac ja w kolejnosci;
+{
+	std::map<int, std::vector<NextPt>> neighbors = inputGraf(fileWithGraph); 
+	std::vector <int> startingPt = inputStartPkt(fileWithStarts, neighbors); 
 	std::map<int, std::map<int, double>> matrix = mapToMatrix(neighbors);
-	bool isExisting;
-	if (!useFile)
+	remove(outputFile.c_str()); 
+	for (unsigned int i = 0; i < startingPt.size(); i++)
 	{
-		for (unsigned int i = 0; i < startingPkt.size(); i++)
-		{
-
-			isExisting = isExistingPkt(neighbors, startingPkt[i]);
-			previousOne = dijkstra(neighbors, startingPkt[i], matrix);
-			writeData(previousOne, startingPkt[i], isExisting);
-		}
-
+			std::map<int, PreviousPt> previousOne = dijkstra(neighbors, startingPt[i], matrix);
+			outputDijkstra(neighbors, startingPt[i], previousOne, outputFile);
 	}
-	else
-	{
-		outputDijkstra(neighbors, startingPkt, matrix, outputFile);
-
-	}
-
 	return;
 }

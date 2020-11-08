@@ -142,20 +142,16 @@
     <ClCompile Include="CommandLineManagament.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="FIleMenagment.cpp" />
+    <ClCompile Include="FileManagment.cpp" />
     <ClCompile Include="OperationOfDijkstra.cpp" />
-    <ClCompile Include="Matrix.cpp" />
-    <ClCompile Include="Output.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandLineManagament.h" />
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="OperationOfDijkstra.h" />
     <ClInclude Include="NextPt.h" />
-    <ClInclude Include="FIleMenagment.h" />
+    <ClInclude Include="FileManagment.h" />
     <ClInclude Include="PreviousPkt.h" />
-    <ClInclude Include="Matrix.h" />
-    <ClInclude Include="Output.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

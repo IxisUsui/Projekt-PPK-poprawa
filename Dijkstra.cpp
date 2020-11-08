@@ -1,15 +1,10 @@
 #include "Dijkstra.h"
 
-
-
-
-
-std::map<int, PreviousPkt> dijkstra (std::map<int, std::vector<NextPt>> neighbors, int start, std::map<int, std::map<int, double>> matrix)
+std::map<int, PreviousPt> dijkstra (std::map<int, std::vector<NextPt>> neighbors, int start, std::map<int, std::map<int, double>> matrix)
 {
 
-	std::map<int, PreviousPkt > previousOne;
-	PreviousPkt previous;
-	
+	std::map<int, PreviousPt > previousOne;
+	PreviousPt previous;
 	for (auto& neighbor : neighbors)
 	{
 		int id = neighbor.first;
@@ -18,7 +13,6 @@ std::map<int, PreviousPkt> dijkstra (std::map<int, std::vector<NextPt>> neighbor
 		previous.distance = (id == start) ? 0 : INT_MAX;
 		previousOne[neighbor.first] = previous;
 	}
-
 	int min = findMin(previousOne);	
 	while (min != -1)
 	{
